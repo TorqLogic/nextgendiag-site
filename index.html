@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextGen Diag AI — A New Generation of Diagnostics</title>
+<meta name="description" content="Turn your phone into a professional-grade OBD2 scanner with an AI diagnostic partner built in. Live data, full trouble code coverage, and plain-language answers — for the driveway and the bay.">
+<link rel="icon" type="image/png" href="assets/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B3A6B;
+    --blue: #0066CC;
+    --glow: #5EC8FF;
+    --bg-light: #F4F8FF;
+    --card: #E8F1FF;
+    --border: #C5D8EE;
+    --text: #1B3A6B;
+    --text-mid: #4A6A8A;
+    --text-light: #8AAAC8;
+    --green: #0A8A4A;
+    --green-bg: #E6F7EE;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.5;
+  }
+
+  .mono { font-family: 'Barlow Semi Condensed', sans-serif; }
+
+  a { color: inherit; }
+
+  img { max-width: 100%; display: block; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav {
+    background: var(--navy);
+    padding: 18px 0;
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--white);
+  }
+  .brand img { width: 34px; height: 34px; border-radius: 9px; }
+  nav .cta-small {
+    background: var(--blue);
+    color: var(--white);
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--navy);
+    color: var(--white);
+    padding: 72px 0 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 64px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--glow);
+    font-size: 0.85rem;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+  }
+  .hero-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+  }
+  h1 {
+    font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.12;
+    max-width: 15ch;
+  }
+  .hero p.lede {
+    font-size: 1.15rem;
+    color: #C9DBF5;
+    max-width: 52ch;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 14px 26px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.35);
+  }
+
+  .waveform-strip {
+    width: 100%;
+    height: 90px;
+    display: block;
+  }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 84px 0; }
+  .section-light { background: var(--white); }
+  .section-tint { background: var(--bg-light); }
+  .section-navy { background: var(--navy); color: var(--white); }
+
+  .eyebrow-none {} /* deliberately no eyebrow labels used anywhere */
+
+  h2 {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    font-weight: 700;
+    max-width: 20ch;
+    margin-bottom: 14px;
+  }
+  .section-lede {
+    color: var(--text-mid);
+    font-size: 1.05rem;
+    max-width: 62ch;
+    margin-bottom: 48px;
+  }
+  .section-navy .section-lede { color: #B9CFEC; }
+
+  /* ---------- Two audiences ---------- */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  @media (min-width: 760px) {
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .audience-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 10px;
+    padding: 32px;
+    transition: border-left-color 0.2s ease;
+  }
+  .audience-card:hover { border-left-color: var(--blue); }
+  .audience-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .audience-card p {
+    color: var(--text-mid);
+    margin-bottom: 10px;
+  }
+  .audience-card p:last-child { margin-bottom: 0; }
+
+  /* ---------- Product demo ---------- */
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (min-width: 860px) {
+    .demo-grid { grid-template-columns: 1.1fr 1fr; }
+  }
+  .tile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .tile {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .tile.active { border-color: var(--blue); }
+  .tile .tile-label {
+    font-size: 0.68rem;
+    color: var(--text-mid);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-bottom: 6px;
+  }
+  .tile .tile-value {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .demo-caption {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 10px;
+  }
+
+  .chat-mock {
+    background: var(--bg-light);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .chat-mock .who {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .chat-mock p {
+    color: var(--text);
+    margin-bottom: 10px;
+    font-size: 0.96rem;
+  }
+  .chat-mock p:last-child { margin-bottom: 0; }
+  .chat-mock strong { color: var(--navy); }
+
+  /* ---------- Coverage list ---------- */
+  .coverage-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  @media (min-width: 700px) {
+    .coverage-list { grid-template-columns: 1fr 1fr; }
+  }
+  .coverage-item {
+    background: var(--white);
+    padding: 26px 28px;
+  }
+  .coverage-item h4 {
+    font-size: 1.02rem;
+    margin-bottom: 6px;
+  }
+  .coverage-item p {
+    color: var(--text-mid);
+    font-size: 0.92rem;
+  }
+  .coverage-item .mode-tag {
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 0.75rem;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 700px) {
+    .pricing-grid { grid-template-columns: 1fr 1fr; max-width: 760px; }
+  }
+  .price-card {
+    background: var(--white);
+    color: var(--text);
+    border-radius: 14px;
+    padding: 34px;
+  }
+  .price-card.featured {
+    box-shadow: 0 0 0 2px var(--glow);
+  }
+  .price-card h3 {
+    font-size: 1.05rem;
+    color: var(--text-mid);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .price-card .amount {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .price-card .amount span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-mid);
+  }
+  .price-card .save {
+    display: inline-block;
+    background: var(--green-bg);
+    color: var(--green);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+  }
+  .price-card ul {
+    list-style: none;
+    margin: 22px 0 26px;
+    padding: 0;
+  }
+  .price-card li {
+    padding: 7px 0;
+    color: var(--text-mid);
+    font-size: 0.92rem;
+    border-top: 1px solid var(--border);
+  }
+  .price-card li:first-child { border-top: none; }
+  .price-card .btn-primary { width: 100%; text-align: center; }
+
+  /* ---------- Waitlist ---------- */
+  .waitlist-box {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: left;
+  }
+  .waitlist-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+    max-width: 480px;
+  }
+  .waitlist-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+  .waitlist-form button {
+    padding: 13px 22px;
+  }
+  .waitlist-note {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 12px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--navy);
+    color: #9BB4D6;
+    padding: 40px 0;
+    font-size: 0.85rem;
+  }
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .brand { color: var(--white); font-size: 0.95rem; }
+  footer .brand img { width: 26px; height: 26px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/icon.png" alt="NextGen Diag AI">
+      NextGen Diag AI
+    </div>
+    <a href="#waitlist" class="cta-small">Get notified</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      IN CLOSED TESTING
+    </div>
+    <h1>A new generation of diagnostics.</h1>
+    <p class="lede">Plug a Bluetooth adapter into your vehicle and your phone becomes a professional-grade scan tool — with an AI mechanic that reads the data and tells you, in plain language, what's actually wrong.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn-primary">Get notified at launch</a>
+      <a href="#demo" class="btn-secondary">See how it works</a>
+    </div>
+  </div>
+  <svg class="waveform-strip" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,45 260,45 300,45 320,10 340,80 360,20 380,45 1200,45"
+      fill="none" stroke="#5EC8FF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"
+      opacity="0.85" />
+  </svg>
+</header>
+
+<section class="section-tint">
+  <div class="wrap">
+    <h2>Built for the driveway and the bay.</h2>
+    <p class="section-lede">Most scan tools pick one audience. This one doesn't have to — a real diagnostic engine underneath works the same way whether you're troubleshooting your own truck or running a full shift of customer vehicles.</p>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>You do your own wrenching</h3>
+        <p>A check engine light shouldn't mean a $150 diagnostic fee just to find out what's wrong. Connect the adapter, and the app walks you through what it found and what to check first — in your language, not a code lookup table.</p>
+        <p>No guessing whether a part swap will actually fix it before you buy one.</p>
+      </div>
+      <div class="audience-card">
+        <h3>You do this for a living</h3>
+        <p>Full live data, every stored, pending, and permanent code, and freeze-frame snapshots from the exact moment a fault set. The AI reasons over trends the same way you would — it doesn't replace your judgment, it gives you a second set of eyes on the data.</p>
+        <p>Pro Mode skips the plain-language layer and gets straight to the numbers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="section-light">
+  <div class="wrap">
+    <h2>Live data, reasoned about — not just displayed.</h2>
+    <p class="section-lede">Every parameter your vehicle reports, tracked in real time. The AI doesn't just show you a number — it watches how that number moves and tells you what the pattern means.</p>
+    <div class="demo-grid">
+      <div>
+        <div class="tile-grid">
+          <div class="tile active">
+            <div class="tile-label">ENGINE RPM</div>
+            <div class="tile-value">819 RPM</div>
+          </div>
+          <div class="tile active">
+            <div class="tile-label">LONG TRIM B1</div>
+            <div class="tile-value">-10.9%</div>
+          </div>
+          <div class="tile active">
+            <div class="tile-label">COOLANT TEMP</div>
+            <div class="tile-value">156&deg;F</div>
+          </div>
+          <div class="tile active">
+            <div class="tile-label">BATTERY VOLTAGE</div>
+            <div class="tile-value">14.42V</div>
+          </div>
+        </div>
+        <p class="demo-caption">A slice of the 44 live parameters tracked during a connected session — fuel trims, temps, pressures, torque, and more.</p>
+      </div>
+      <div class="chat-mock">
+        <div class="who">AI</div>
+        <p><strong>Both fuel trim banks are pulling fuel evenly</strong> — that points to something the whole engine is seeing, not a one-bank problem.</p>
+        <p>MAF is reading in the ballpark, but a slightly over-reporting sensor would explain this exact pattern. Before replacing parts, I'd pull the MAF and check for oil film or debris on the element.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tint">
+  <div class="wrap">
+    <h2>Everything a shop-grade scanner reads. Nothing held back.</h2>
+    <p class="section-lede">This isn't a stripped-down version of a real tool. It reads the complete generic OBD-II specification — the same modes a professional scan tool uses.</p>
+    <div class="coverage-list">
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 01</span>
+        <h4>Live data</h4>
+        <p>44 parameters in real time — RPM, fuel trims, temperatures, pressures, torque, and more.</p>
+      </div>
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 02</span>
+        <h4>Freeze frame</h4>
+        <p>What every parameter looked like at the exact moment a fault code set.</p>
+      </div>
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 03</span>
+        <h4>Stored codes</h4>
+        <p>Trouble codes that have triggered the check engine light.</p>
+      </div>
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 07</span>
+        <h4>Pending codes</h4>
+        <p>Faults that have shown up once but haven't matured into a stored code yet — an early warning.</p>
+      </div>
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 0A</span>
+        <h4>Permanent codes</h4>
+        <p>Codes that survive a scan-tool clear — the tell for whether a problem was actually fixed or just hidden.</p>
+      </div>
+      <div class="coverage-item">
+        <span class="mode-tag">MODE 09</span>
+        <h4>Vehicle identification</h4>
+        <p>Reads the VIN straight from the vehicle and decodes year, make, and model automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-navy">
+  <div class="wrap">
+    <h2>Simple pricing, no surprises.</h2>
+    <p class="section-lede">Every plan includes the full app — live data, all diagnostic modes, and unlimited AI reasoning. Try it free for 7 days.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Monthly</h3>
+        <div class="amount">$19.99<span>/mo</span></div>
+        <ul>
+          <li>Full OBD2 diagnostic engine</li>
+          <li>Unlimited AI diagnostics</li>
+          <li>7-day free trial</li>
+        </ul>
+        <a href="#waitlist" class="btn-primary">Get notified</a>
+      </div>
+      <div class="price-card featured">
+        <h3>Annual</h3>
+        <div class="amount">$149.99<span>/yr</span></div>
+        <span class="save">Save 38%</span>
+        <ul>
+          <li>Full OBD2 diagnostic engine</li>
+          <li>Unlimited AI diagnostics</li>
+          <li>7-day free trial</li>
+        </ul>
+        <a href="#waitlist" class="btn-primary">Get notified</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="waitlist" class="section-light">
+  <div class="wrap">
+    <div class="waitlist-box">
+      <h2>Get notified when it launches.</h2>
+      <p class="section-lede" style="margin-bottom:0;">Currently in closed testing on iOS and Android. Leave your email and you'll hear the moment it's publicly available.</p>
+      <form class="waitlist-form" action="#" method="post">
+        <input type="email" placeholder="you@email.com" required>
+        <button type="submit" class="btn-primary">Notify me</button>
+      </form>
+      <p class="waitlist-note">This form isn't wired to anything yet — connect it to a form service (Formspree, Google Forms, etc.) before launch.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="display:flex; align-items:center; gap:10px;">
+      <img src="assets/icon.png" alt="NextGen Diag AI">
+      NextGen Diag AI
+    </div>
+    <div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
+      <a href="privacy-policy.html" style="color:#9BB4D6; text-decoration:none;">Privacy Policy</a>
+      <a href="terms-of-service.html" style="color:#9BB4D6; text-decoration:none;">Terms of Service</a>
+      <span>&copy; 2026 NextGen Diag AI. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
