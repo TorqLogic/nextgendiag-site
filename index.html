@@ -91,7 +91,44 @@
     grid-template-columns: 1fr;
     gap: 28px;
     padding-bottom: 64px;
+    align-items: center;
   }
+  @media (min-width: 900px) {
+    .hero .wrap {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+    }
+  }
+  .hero-text { display: flex; flex-direction: column; gap: 20px; }
+  .phone-frame {
+    display: none;
+    justify-self: center;
+    background: #0A1A33;
+    border-radius: 32px;
+    padding: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    width: 260px;
+  }
+  @media (min-width: 900px) {
+    .phone-frame { display: block; }
+  }
+  .phone-frame .screen {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    aspect-ratio: 9 / 19.5;
+    background: #F4F8FF;
+  }
+  .phone-frame .screen img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .phone-frame .screen img.is-active { opacity: 1; }
   .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -420,15 +457,25 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      IN CLOSED TESTING
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        IN CLOSED TESTING
+      </div>
+      <h1>A new generation of diagnostics.</h1>
+      <p class="lede">Plug a Bluetooth adapter into your vehicle and your phone becomes a professional-grade scan tool — with an AI mechanic that reads the data and tells you, in plain language, what's actually wrong.</p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn-primary">Get notified at launch</a>
+        <a href="#demo" class="btn-secondary">See how it works</a>
+      </div>
     </div>
-    <h1>A new generation of diagnostics.</h1>
-    <p class="lede">Plug a Bluetooth adapter into your vehicle and your phone becomes a professional-grade scan tool — with an AI mechanic that reads the data and tells you, in plain language, what's actually wrong.</p>
-    <div class="hero-actions">
-      <a href="#waitlist" class="btn-primary">Get notified at launch</a>
-      <a href="#demo" class="btn-secondary">See how it works</a>
+    <div class="phone-frame">
+      <div class="screen">
+        <img src="assets/screenshots/live-data.png" alt="Live OBD2 data screen" class="is-active">
+        <img src="assets/screenshots/vin-identified.png" alt="Automatic VIN decode">
+        <img src="assets/screenshots/ai-diagnosis.png" alt="AI diagnostic reasoning">
+        <img src="assets/screenshots/setup-screen.png" alt="Pro Tech and DIY Owner modes">
+      </div>
     </div>
   </div>
   <svg class="waveform-strip" viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -566,11 +613,12 @@
     <div class="waitlist-box">
       <h2>Get notified when it launches.</h2>
       <p class="section-lede" style="margin-bottom:0;">Currently in closed testing on iOS and Android. Leave your email and you'll hear the moment it's publicly available.</p>
-            <form class="waitlist-form" action="https://formspree.io/f/xwlkrngp" method="post">
+      <form class="waitlist-form" action="https://formspree.io/f/xwlkrngp" method="post">
         <input type="email" name="email" placeholder="you@email.com" required>
         <button type="submit" class="btn-primary">Notify me</button>
       </form>
-      <p class="waitlist-note">We'll only email you about launch — no spam, unsubscribe anytime.</p>    </div>
+      <p class="waitlist-note">We'll only email you about launch — no spam, unsubscribe anytime.</p>
+    </div>
   </div>
 </section>
 
@@ -588,5 +636,17 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    var images = document.querySelectorAll('.phone-frame .screen img');
+    if (images.length < 2) return;
+    var current = 0;
+    setInterval(function () {
+      images[current].classList.remove('is-active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('is-active');
+    }, 3500);
+  })();
+</script>
 </body>
 </html>
